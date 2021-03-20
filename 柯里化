@@ -1,0 +1,26 @@
+1. 柯里化概念：一个函数有多个参数，先传递一部分参数并调用它，返回一个新的函数用于接收其余参数并返回结果
+
+2. 柯里化例子：
+
+const sayHello = (who, what, whom) {
+  return (who) => {
+     console.log(who, 'says hello to', whom)
+  }
+}
+const LiLeisayHello = sayHello('LiLei')
+LiLeiSay('Han Meimei')
+
+3. 柯里化原理
+function curry(func) {
+  return function curriedFn (...args) {
+    // 实参个数小于形参个数，返回一个新函数，这个新函数中缓存了已传参数值，递归执行并返回结果
+    if (args.length < func.length) {
+      return function () {
+        return curriedFn(...args.concat(Array.from(arguments)))
+      }
+    }
+    // 实参个数等于形参个数，直接执行
+    return func(...args)
+  }
+}
+
